@@ -1,9 +1,9 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
-let { token } = require('./config.json');
+let token = process.env.lilToken;
 if (typeof token === 'undefined') {
-	token = process.env.lilToken;
+	token = require('./config.json').token;
 	if (typeof token === 'undefined') {
 		console.error('Token is not defined in config.json or environment variables.');
 		process.exit(1);
