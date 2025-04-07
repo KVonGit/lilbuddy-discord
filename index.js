@@ -1,7 +1,14 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
-const { token } = require('./config.json');
+let { token } = require('./config.json');
+if (typeof token === 'undefined') {
+	token = process.env.lilToken;
+	if (typeof token === 'undefined') {
+		console.error('Token is not defined in config.json or environment variables.');
+		process.exit(1);
+	}
+}
 
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -31,7 +38,7 @@ for (const folder of commandFolders) {
 // The distinction between `client: Client<boolean>` and `readyClient: Client<true>` is important for TypeScript developers.
 // It makes some properties non-nullable.
 client.once(Events.ClientReady, readyClient => {
-	console.log(`Ready! Logged in as ${readyClient.user.tag}`);
+	console.log(`Chauncey is now logged in as ${readyClient.user.tag}`);
 });
 
 // Log in to Discord with your client's token
